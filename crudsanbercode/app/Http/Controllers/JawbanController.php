@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Answer;
+use App\Modles\Questions;
 use Illuminate\Http\Request;
 
 class JawbanController extends Controller
@@ -13,7 +14,14 @@ class JawbanController extends Controller
      */
     public function index()
     {
-        //
+         // $data = Jawaban::show($id);
+        // dd($data);
+        $pertanyaan = Pertanyaan::show($id);
+        $pertanyaan_id = $pertanyaan->id;
+        $jawaban = Jawaban::show($pertanyaan_id);
+        // dd($jawaban);
+        return view('items.create-jawaban', compact('pertanyaan', 'jawaban'));
+   
     }
 
     /**
@@ -34,7 +42,13 @@ class JawbanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $isi = $request->input('isi');
+        $data = [
+            'isi' => $isi,
+            'question_id' => $id
+        ];
+        $store = Jawaban::save($data);
+        return redirect('/jawaban/' . $id);
     }
 
     /**

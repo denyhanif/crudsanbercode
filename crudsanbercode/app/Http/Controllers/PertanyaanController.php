@@ -13,7 +13,9 @@ class PertanyaanController extends Controller
      */
     public function index()
     {
-        //
+        
+        $data = Pertanyaan::getAll();
+        return view('items.pertanyaan', compact('data'));
     }
 
     /**
@@ -23,7 +25,8 @@ class PertanyaanController extends Controller
      */
     public function create()
     {
-        //
+                return view('items.create-pertanyaan');
+
     }
 
     /**
@@ -34,7 +37,10 @@ class PertanyaanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+          $data = $request->all();
+        unset($data['_token']);
+        $store = Pertanyaan::save($data);
+        return redirect('/pertanyaan');
     }
 
     /**
